@@ -13,6 +13,8 @@
 
 ## 发布和安装
 
+在线安装页：<https://yanghongzhi-ctrl.github.io/Codog-Codex-Pet/>
+
 将 `index.html` 和 `codog-native-v2.webp` 原样发布到同一个公开 HTTPS 目录，然后访问 `index.html`。页面会自动生成 Codex 原生宠物安装链接。
 
 Codex 不接受本地文件、localhost、HTTP 地址或发生重定向的图片地址。图片必须是 PNG 或 WebP，且小于 20 MB。
