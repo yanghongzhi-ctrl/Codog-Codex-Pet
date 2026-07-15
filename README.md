@@ -15,6 +15,8 @@
 
 在线安装页：<https://yanghongzhi-ctrl.github.io/Codog-Codex-Pet/>
 
+请在 Edge 或 Chrome 中打开安装页。链接会先打开 Codex 预览窗口；随后仍需依次点击 `Install` 和 `Use this pet`。Codex 内置浏览器可能会拦截 `codex://` 协议。
+
 将 `index.html` 和 `codog-native-v2.webp` 原样发布到同一个公开 HTTPS 目录，然后访问 `index.html`。页面会自动生成 Codex 原生宠物安装链接。
 
 Codex 不接受本地文件、localhost、HTTP 地址或发生重定向的图片地址。图片必须是 PNG 或 WebP，且小于 20 MB。

@@ -9,16 +9,30 @@
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f3f0ed; color: #24211f; }
     main { width: min(92vw, 720px); padding: 32px; border-radius: 24px; background: rgba(255,255,255,.86); box-shadow: 0 20px 70px #392c251f; text-align: center; }
     .preview { width: 288px; height: 312px; margin: 0 auto; background-image: url('codog-native-v2.webp'); background-size: 800% 1100%; background-repeat: no-repeat; }
-    a { display: inline-block; margin-top: 22px; padding: 13px 22px; border-radius: 999px; background: #51433f; color: white; text-decoration: none; font-weight: 700; }
+    .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 22px; }
+    a, button { display: inline-block; padding: 13px 22px; border: 0; border-radius: 999px; background: #51433f; color: white; text-decoration: none; font: inherit; font-weight: 700; cursor: pointer; }
+    button { background: #81736d; }
     p { line-height: 1.7; color: #625853; }
+    .steps { margin: 20px auto 0; padding: 14px 18px; border-radius: 14px; background: #ede8e4; text-align: left; }
   </style>
 </head>
 <body>
   <main>
     <h1>Codog 原生 Codex 宠物</h1>
     <div class="preview" role="img" aria-label="Codog 空闲动画预览"></div>
-    <p>点击下面的按钮，Codex 会打开原生宠物预览与安装窗口。</p>
-    <a id="install" href="#">在 Codex 中安装</a>
+    <p>请使用 Edge 或 Chrome 打开本页。Codex 内置浏览器可能会拦截安装协议。</p>
+    <div class="actions">
+      <a id="install" href="#">打开 Codex 安装预览</a>
+      <button id="copy" type="button">复制安装链接</button>
+    </div>
+    <div class="steps">
+      <strong>完成安装需要三步：</strong>
+      <ol>
+        <li>点击“打开 Codex 安装预览”。</li>
+        <li>在 Codex 弹窗中点击“Install”。</li>
+        <li>安装完成后点击“Use this pet”。</li>
+      </ol>
+    </div>
     <p id="note"></p>
   </main>
   <script>
@@ -30,6 +44,15 @@
       spriteVersionNumber: '2'
     });
     document.querySelector('#install').href = `codex://pets/install?${params}`;
+    const installUrl = document.querySelector('#install').href;
+    document.querySelector('#copy').addEventListener('click', async event => {
+      try {
+        await navigator.clipboard.writeText(installUrl);
+        event.currentTarget.textContent = '已复制，请粘贴到 Edge/Chrome 地址栏';
+      } catch {
+        document.querySelector('#note').textContent = `请复制此安装链接：${installUrl}`;
+      }
+    });
 
     const preview = document.querySelector('.preview');
     const idleFrames = [0, 1, 2, 3, 4, 5];
