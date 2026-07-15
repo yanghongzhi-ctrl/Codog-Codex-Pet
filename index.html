@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>安装 Codog 原生 Codex 宠物</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f3f0ed; color: #24211f; }
+    main { width: min(92vw, 720px); padding: 32px; border-radius: 24px; background: rgba(255,255,255,.86); box-shadow: 0 20px 70px #392c251f; text-align: center; }
+    .preview { width: 288px; height: 312px; margin: 0 auto; background-image: url('codog-native-v2.webp'); background-size: 800% 1100%; background-repeat: no-repeat; }
+    a { display: inline-block; margin-top: 22px; padding: 13px 22px; border-radius: 999px; background: #51433f; color: white; text-decoration: none; font-weight: 700; }
+    p { line-height: 1.7; color: #625853; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Codog 原生 Codex 宠物</h1>
+    <div class="preview" role="img" aria-label="Codog 空闲动画预览"></div>
+    <p>点击下面的按钮，Codex 会打开原生宠物预览与安装窗口。</p>
+    <a id="install" href="#">在 Codex 中安装</a>
+    <p id="note"></p>
+  </main>
+  <script>
+    const imageUrl = new URL('codog-native-v2.webp', location.href).href;
+    const params = new URLSearchParams({
+      name: 'Codog',
+      description: '一只陪伴 Codex 编程、读取文件、等待、审阅和排错的黏土小狗。',
+      imageUrl,
+      spriteVersionNumber: '2'
+    });
+    document.querySelector('#install').href = `codex://pets/install?${params}`;
+
+    const preview = document.querySelector('.preview');
+    const idleFrames = [0, 1, 2, 3, 4, 5];
+    const idleDurations = [280, 110, 110, 140, 140, 320].map(value => value * 6);
+    let frameIndex = 0;
+    function showNextFrame() {
+      const column = idleFrames[frameIndex];
+      preview.style.backgroundPosition = `${column / 7 * 100}% 0%`;
+      const duration = idleDurations[frameIndex];
+      frameIndex = (frameIndex + 1) % idleFrames.length;
+      window.setTimeout(showNextFrame, duration);
+    }
+    showNextFrame();
+
+    if (location.protocol !== 'https:') {
+      document.querySelector('#note').textContent = '请先将本页面发布到公开 HTTPS 地址，再使用安装按钮。';
+    }
+  </script>
+</body>
+</html>
